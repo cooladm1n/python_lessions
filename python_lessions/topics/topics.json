@@ -1,0 +1,124 @@
+{
+  "topics": [
+    {
+      "id": "basics",
+      "title": "Python Basics",
+      "readme": "basics/README.md",
+      "lessons": [
+        { "displayId": "lesson_01", "lessonId": "basics/lesson_01" },
+        { "displayId": "lesson_02", "lessonId": "basics/lesson_02" },
+        { "displayId": "lesson_03", "lessonId": "basics/lesson_03" },
+        { "displayId": "lesson_04", "lessonId": "basics/lesson_04" },
+        { "displayId": "lesson_05", "lessonId": "basics/lesson_05" },
+        { "displayId": "lesson_06", "lessonId": "basics/lesson_06" },
+        { "displayId": "lesson_07", "lessonId": "basics/lesson_07" },
+        { "displayId": "lesson_08", "lessonId": "basics/lesson_08" },
+        { "displayId": "lesson_09", "lessonId": "basics/lesson_09" },
+        { "displayId": "lesson_10", "lessonId": "basics/lesson_10" }
+      ]
+    },
+    {
+      "id": "structure_and_errors",
+      "title": "Modules and Error Handling",
+      "readme": "structure_and_errors/README.md",
+      "lessons": [
+        { "displayId": "lesson_01", "lessonId": "structure_and_errors/lesson_01" },
+        { "displayId": "lesson_02", "lessonId": "structure_and_errors/lesson_02" },
+        { "displayId": "lesson_03", "lessonId": "structure_and_errors/lesson_03" },
+        { "displayId": "lesson_04", "lessonId": "structure_and_errors/lesson_04" },
+        { "displayId": "lesson_05", "lessonId": "structure_and_errors/lesson_05" },
+        { "displayId": "lesson_06", "lessonId": "structure_and_errors/lesson_06" },
+        { "displayId": "lesson_07", "lessonId": "structure_and_errors/lesson_07" },
+        { "displayId": "lesson_08", "lessonId": "structure_and_errors/lesson_08" },
+        { "displayId": "lesson_09", "lessonId": "structure_and_errors/lesson_09" },
+        { "displayId": "lesson_10", "lessonId": "structure_and_errors/lesson_10" }
+      ]
+    },
+    {
+      "id": "oop_and_iter",
+      "title": "OOP, Iterators & Context",
+      "readme": "oop_and_iter/README.md",
+      "lessons": [
+        { "displayId": "lesson_01", "lessonId": "oop_and_iter/lesson_01" },
+        { "displayId": "lesson_02", "lessonId": "oop_and_iter/lesson_02" },
+        { "displayId": "lesson_03", "lessonId": "oop_and_iter/lesson_03" },
+        { "displayId": "lesson_04", "lessonId": "oop_and_iter/lesson_04" },
+        { "displayId": "lesson_05", "lessonId": "oop_and_iter/lesson_05" },
+        { "displayId": "lesson_06", "lessonId": "oop_and_iter/lesson_06" },
+        { "displayId": "lesson_07", "lessonId": "oop_and_iter/lesson_07" },
+        { "displayId": "lesson_08", "lessonId": "oop_and_iter/lesson_08" },
+        { "displayId": "lesson_09", "lessonId": "oop_and_iter/lesson_09" },
+        { "displayId": "lesson_10", "lessonId": "oop_and_iter/lesson_10" }
+      ]
+    },
+    {
+      "id": "asyncio",
+      "title": "Asyncio & Concurrency",
+      "readme": "asyncio/README.md",
+      "lessons": [
+        { "displayId": "lesson_01", "lessonId": "asyncio/lesson_01" },
+        { "displayId": "lesson_02", "lessonId": "asyncio/lesson_02" },
+        { "displayId": "lesson_03", "lessonId": "asyncio/lesson_03" },
+        { "displayId": "lesson_04", "lessonId": "asyncio/lesson_04" },
+        { "displayId": "lesson_05", "lessonId": "asyncio/lesson_05" },
+        { "displayId": "lesson_06", "lessonId": "asyncio/lesson_06" },
+        { "displayId": "lesson_07", "lessonId": "asyncio/lesson_07" },
+        { "displayId": "lesson_08", "lessonId": "asyncio/lesson_08" },
+        { "displayId": "lesson_09", "lessonId": "asyncio/lesson_09" },
+        { "displayId": "lesson_10", "lessonId": "asyncio/lesson_10" }
+      ]
+    },
+    {
+      "id": "testing_and_quality",
+      "title": "Testing & Best Practices",
+      "readme": "testing_and_quality/README.md",
+      "lessons": [
+        { "displayId": "lesson_01", "lessonId": "testing_and_quality/lesson_01" },
+        { "displayId": "lesson_02", "lessonId": "testing_and_quality/lesson_02" },
+        { "displayId": "lesson_03", "lessonId": "testing_and_quality/lesson_03" },
+        { "displayId": "lesson_04", "lessonId": "testing_and_quality/lesson_04" },
+        { "displayId": "lesson_05", "lessonId": "testing_and_quality/lesson_05" },
+        { "displayId": "lesson_06", "lessonId": "testing_and_quality/lesson_06" },
+        { "displayId": "lesson_07", "lessonId": "testing_and_quality/lesson_07" },
+        { "displayId": "lesson_08", "lessonId": "testing_and_quality/lesson_08" },
+        { "displayId": "lesson_09", "lessonId": "testing_and_quality/lesson_09" },
+        { "displayId": "lesson_10", "lessonId": "testing_and_quality/lesson_10" }
+      ]
+    },
+    {
+      "id": "sqlalchemy",
+      "title": "SQLAlchemy ORM",
+      "readme": "sqlalchemy/README.md",
+      "lessons": [
+        { "displayId": "lesson_01", "lessonId": "sqlalchemy/lesson_01" },
+        { "displayId": "lesson_02", "lessonId": "sqlalchemy/lesson_02" },
+        { "displayId": "lesson_03", "lessonId": "sqlalchemy/lesson_03" },
+        { "displayId": "lesson_04", "lessonId": "sqlalchemy/lesson_04" },
+        { "displayId": "lesson_05", "lessonId": "sqlalchemy/lesson_05" },
+        { "displayId": "lesson_06", "lessonId": "sqlalchemy/lesson_06" },
+        { "displayId": "lesson_07", "lessonId": "sqlalchemy/lesson_07" },
+        { "displayId": "lesson_08", "lessonId": "sqlalchemy/lesson_08" },
+        { "displayId": "lesson_09", "lessonId": "sqlalchemy/lesson_09" },
+        { "displayId": "lesson_10", "lessonId": "sqlalchemy/lesson_10" }
+      ]
+    },
+    {
+      "id": "fastapi",
+      "title": "FastAPI",
+      "readme": "fastapi/README.md",
+      "lessons": [
+        { "displayId": "lesson_01", "lessonId": "fastapi/lesson_01" },
+        { "displayId": "lesson_02", "lessonId": "fastapi/lesson_02" },
+        { "displayId": "lesson_03", "lessonId": "fastapi/lesson_03" },
+        { "displayId": "lesson_04", "lessonId": "fastapi/lesson_04" },
+        { "displayId": "lesson_05", "lessonId": "fastapi/lesson_05" },
+        { "displayId": "lesson_06", "lessonId": "fastapi/lesson_06" },
+        { "displayId": "lesson_07", "lessonId": "fastapi/lesson_07" },
+        { "displayId": "lesson_08", "lessonId": "fastapi/lesson_08" },
+        { "displayId": "lesson_09", "lessonId": "fastapi/lesson_09" },
+        { "displayId": "lesson_10", "lessonId": "fastapi/lesson_10" }
+      ]
+    }
+  ]
+}
+
