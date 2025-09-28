@@ -1,22 +1,32 @@
 # Lesson 04: Functions, Parameters, and Type Hints
 
-In this lesson you will learn:
-- Defining functions, returns, and early returns
-- Positional, keyword, default, and keyword-only parameters
-- `*args` and `**kwargs` for flexible APIs
-- Type hints and docstrings for readability and tooling
-- Pure functions vs side effects, input validation and errors
+Estimated time: 45-75 minutes
 
-Guidelines:
-- Keep functions small, focused, and named by intent.
-- Validate inputs early; raise precise exceptions.
-- Use keyword-only params for clarity in multi-flag functions.
+Learning outcomes
+- Define functions with positional, keyword and keyword-only parameters.
+- Use `*args`/`**kwargs`, docstrings and type hints.
+- Distinguish pure functions from side-effecting ones and validate inputs.
 
-Exercises:
-1) Implement `greet(name: str, excited: bool=False)` that returns a string.
-2) Implement `mean(*numbers: float) -> float` and test it.
-3) Implement `clamp(value, *, min_value=None, max_value=None)` with validation.
-4) Write `safe_div(a: float, b: float, *, default=None)` that returns `default` instead of raising on zero division.
-5) Add type hints and docstrings to your functions and run a type checker.
-6) Show multiple returns (tuple) and tuple unpacking.
-7) Use a keyword-only boolean flag to change behavior clearly.
+Acceptance criteria
+- Implement `greet(name: str, excited: bool=False) -> str`.
+- Implement `mean(*numbers: float) -> float` raising ValueError on empty input.
+
+Worked examples
+
+```py
+def greet(name: str, excited: bool = False) -> str:
+	return f"Hello, {name}{'!' if excited else '.'}"
+
+def mean(*numbers: float) -> float:
+	if not numbers:
+		raise ValueError("mean requires at least one number")
+	return sum(numbers) / len(numbers)
+```
+
+Exercises (mandatory)
+1) Implement `greet` and `mean` and write tests for normal and error cases.
+2) Implement `clamp(value, *, min_value=None, max_value=None)` that enforces bounds.
+
+Hints & testing
+- Use type hints and run `mypy` to catch simple mistakes.
+- Write tests for keyword-only parameters to ensure correct behavior.

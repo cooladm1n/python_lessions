@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import Header from '@/components/Header';
+import Breadcrumbs from '@/components/Breadcrumbs';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="min-h-screen bg-gray-50">
-          {children}
+          <Header />
+          <Breadcrumbs />
+          <main>{children}</main>
         </div>
       </body>
     </html>

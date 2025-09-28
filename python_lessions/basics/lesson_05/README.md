@@ -1,23 +1,36 @@
 # Lesson 05: Collections and Comprehensions
 
-In this lesson you will learn:
-- Lists, tuples, sets, dictionaries: creation, mutation, methods
-- Slicing and copying lists; pitfalls with nested lists
-- Comprehensions with conditions and transformations
-- Sorting with `key`, multi-key sorting with tuples
-- Unpacking and the splat operators `*` and `**`
+Estimated time: 60-90 minutes
 
-Patterns:
-- Use list comprehensions for clarity when transforming sequences.
-- Prefer tuples for fixed-size records; sets for membership tests.
-- For stable deterministic order after deduplication, use dict from keys.
+Learning outcomes
+- Use lists, tuples, sets, and dicts, and choose correct types for tasks.
+- Write comprehensions and use `key` functions for sorting.
+- Understand shallow vs deep copy pitfalls.
 
-Exercises:
-1) Build a list of squares 1..20 using a comprehension and filter evens.
-2) From a list of words, build a dict {word: len(word)} using a comprehension.
-3) Remove duplicates while preserving order (dict or seen-set).
-4) Sort a list of dicts by multiple keys (e.g., age asc, name asc).
-5) Flatten a nested list `[[1,2],[3,4]]` into `[1,2,3,4]` using a comprehension.
-6) Use tuple unpacking to swap variables and unpack nested structures.
-7) Use a set to compute unique words from text, case-insensitive.
-8) Demonstrate shallow vs deep copy on nested lists (`copy` vs `deepcopy`).
+Acceptance criteria
+- Implement `deduplicate_preserve_order(seq)` returning a list without duplicates preserving order.
+- Implement a comprehension that maps words to lengths.
+
+Worked example
+
+```py
+def deduplicate_preserve_order(seq):
+	seen = set()
+	out = []
+	for x in seq:
+		if x not in seen:
+			seen.add(x)
+			out.append(x)
+	return out
+
+words = ["apple", "banana", "apple"]
+word_lens = {w: len(w) for w in words}
+```
+
+Exercises (mandatory)
+1) Implement `deduplicate_preserve_order` and test with repeated elements.
+2) Sort list of dicts by multiple keys and write a small test.
+
+Hints & testing
+- Test deduplication with different element types and empty lists.
+- Use `copy.deepcopy` to illustrate deep vs shallow copies in tests.

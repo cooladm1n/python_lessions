@@ -1,16 +1,38 @@
 # Lesson 06: Strings and File I/O (with Context Managers)
 
-In this lesson you will learn:
-- String methods: `split`, `join`, `strip`, `replace`, `startswith`, `in`
-- f-strings and formatting specifiers
-- Reading/writing text files safely with `with`
-- Path handling with `pathlib`
-- Newline and encoding basics
+Estimated time: 60-90 minutes
 
-Exercises:
-1) Write text to a file and read it back.
-2) Count lines, words, and characters in a file (like `wc`).
-3) Replace all occurrences of a word and save to a new file.
-4) Parse CSV-like lines (comma-separated) into lists and join them.
-5) Build a simple log file with timestamped messages.
-6) Demonstrate handling of UTF-8 characters both reading and writing.
+Learning outcomes
+- Manipulate strings with common methods and format output using f-strings.
+- Read and write files safely with `with` and use `pathlib` for paths.
+- Handle encodings and newline differences in a cross-platform way.
+
+Acceptance criteria
+- Implement `count_lines_words_chars(path)` returning a tuple (lines, words, chars).
+- Implement `replace_in_file(src, dst, old, new)` which writes replaced content to dst.
+
+Worked example
+
+```py
+from pathlib import Path
+
+def read_text(path: str) -> str:
+	return Path(path).read_text(encoding="utf-8")
+
+def write_text(path: str, content: str) -> None:
+	Path(path).write_text(content, encoding="utf-8")
+
+def count_lines_words_chars(path: str):
+	text = read_text(path)
+	lines = text.splitlines()
+	words = text.split()
+	return len(lines), len(words), len(text)
+```
+
+Exercises (mandatory)
+1) Implement `count_lines_words_chars` and test with known sample files.
+2) Implement `replace_in_file` and verify output file contents in a test using `tmp_path` fixture.
+
+Hints & testing
+- Use pytest `tmp_path` fixture to create temporary files for tests.
+- Remember to specify encoding to avoid cross-platform issues.

@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+      - name: Clean __pycache__
+        run: |
+          # Remove compiled bytecode caches to avoid pytest import collisions
+          find python_lessions -type d -name '__pycache__' -print -exec rm -rf {} + || true
+      - name: Lint (black check)
+        run: |
+          python -m pip install black
+          black --check .
+      - name: Type check (mypy)
+        run: |
+          python -m pip install mypy
+          mypy --ignore-missing-imports .
+      - name: Run tests per-lesson
+        run: |
+          # Run pytest on each lesson directory separately to avoid module name collisions
+          set -euo pipefail
+          for d in python_lessions/*/lesson_*; do
+            if [ -d "$d" ]; then
+              echo "----- pytest: $d -----"
+              pytest -q "$d"
+            fi
+          done

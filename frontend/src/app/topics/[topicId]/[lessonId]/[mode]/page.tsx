@@ -64,7 +64,16 @@ export default function LessonPage() {
     );
   }
 
+  // Find the metadata for the current lesson (title, displayId) inside topic.lessons
+  const currentLessonMeta = topic.lessons.find((l) => {
+    const s = l.lessonId.includes('/') ? l.lessonId.split('/').pop()! : l.lessonId;
+    return s === lessonId || l.lessonId === lessonId;
+  });
+
+  const currentLessonTitle = currentLessonMeta?.title ?? lessonId;
+
   const tabs = [
+    // Use short lesson id (basename) for routing — lessonId param is expected to be the short id
     { id: 'overview', label: 'Overview', href: `/topics/${topicId}/${lessonId}/overview` },
     { id: 'solve', label: 'Solve', href: `/topics/${topicId}/${lessonId}/solve` },
   ];
@@ -72,27 +81,10 @@ export default function LessonPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Breadcrumb */}
-        <nav className="mb-6">
-          <ol className="flex items-center space-x-2 text-sm text-gray-500">
-            <li>
-              <Link href="/" className="hover:text-gray-700">
-                Topics
-              </Link>
-            </li>
-            <li>/</li>
-            <li>
-              <Link href={`/topics/${topicId}`} className="hover:text-gray-700">
-                {topic.title}
-              </Link>
-            </li>
-            <li>/</li>
-            <li className="text-gray-900 font-medium">{lessonId}</li>
-          </ol>
-        </nav>
+        {/* Breadcrumb removed: using global Breadcrumbs component in layout */}
 
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900">{lessonId}</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{currentLessonTitle}</h1>
         </div>
 
         {/* Tabs */}
@@ -124,20 +116,24 @@ export default function LessonPage() {
                 <h3 className="text-lg font-semibold text-gray-900">Lessons</h3>
               </div>
               <div className="p-2">
-                {topic.lessons.map((l) => (
-                  <Link
-                    key={l.lessonId}
-                    href={`/topics/${topicId}/${l.lessonId}/overview`}
-                    className={`block px-3 py-2 rounded-md text-sm transition-colors ${
-                      l.lessonId === lessonId
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'text-gray-700 hover:bg-gray-100'
-                    }`}
-                  >
-                    <div className="font-medium">{l.displayId}</div>
-                    <div className="text-xs text-gray-500 mt-1">{l.title}</div>
-                  </Link>
-                ))}
+                {topic.lessons.map((l) => {
+                  const shortId = l.lessonId.includes('/') ? l.lessonId.split('/').pop()! : l.lessonId;
+                  const isCurrent = shortId === lessonId || l.lessonId === lessonId;
+
+                  return (
+                    <Link
+                      key={l.lessonId}
+                      href={`/topics/${topicId}/${shortId}/overview`}
+                      className={`block px-3 py-2 rounded-md text-sm transition-colors ${
+                        isCurrent
+                          ? 'bg-blue-100 text-blue-700'
+                          : 'text-gray-700 hover:bg-gray-100'
+                      }`}
+                    >
+                      <div className="font-medium">{l.title}</div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

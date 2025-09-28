@@ -17,10 +17,10 @@ export default function HomePage() {
       try {
         const data = await apiClient.getTopics();
         setTopics(data);
-        if (data.length > 0) {
-          // Redirect to first topic
-          router.push(`/topics/${data[0].id}`);
-        }
+        // NOTE: previously we automatically redirected to the first topic here
+        // (router.push(`/topics/${data[0].id}`)). That caused an immediate
+        // navigation from `/` to `/topics/...`. We removed the automatic
+        // redirect so users stay on the landing page and choose a topic.
       } catch (err) {
         setError('Failed to load topics');
         console.error('Error fetching topics:', err);

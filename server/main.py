@@ -3,6 +3,7 @@ import json
 import re
 import shutil
 import subprocess
+import os
 import sys
 import tempfile
 from pathlib import Path
@@ -252,7 +253,16 @@ def discover_lessons() -> List[Dict[str, Any]]:
 
 
 def run_pytest_with_student_code(lesson_id: str, student_code: str) -> Dict[str, Any]:
-    """Run pytest on student code with lesson tests."""
+    """Run pytest on student code with lesson tests.
+
+    Notes:
+    - This function makes a best-effort attempt to limit damage from untrusted student code
+      by running tests inside a temporary directory, using a minimal environment, closing
+      stdin, enforcing a timeout and (on Unix) applying soft resource limits.
+    - This is NOT a full sandbox. For multi-tenant safety deploy behind container-based
+      sandboxes (Docker, gVisor, Firecracker) or sandboxing tools (nsjail, Firejail).
+    """
+
     # Support both old format (lession_XX) and new format (topic/lesson_XX)
     if "/" in lesson_id:
         # New format: topic/lesson_XX
@@ -260,19 +270,77 @@ def run_pytest_with_student_code(lesson_id: str, student_code: str) -> Dict[str,
     else:
         # Old format: lession_XX (for backward compatibility)
         lesson_dir = LESSONS_ROOT / lesson_id
-    
+
+    # Prevent path traversal or accidental access outside LESSONS_ROOT
+    try:
+        lesson_dir = lesson_dir.resolve()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid lesson path")
+
+    if LESSONS_ROOT not in lesson_dir.parents and LESSONS_ROOT != lesson_dir:
+        raise HTTPException(status_code=400, detail="Lesson path outside allowed root")
+
     tests_src = lesson_dir / "test_tasks.py"
     if not tests_src.exists():
         raise HTTPException(status_code=400, detail="Tests not found for this lesson")
 
     with tempfile.TemporaryDirectory() as td:
         tmp = Path(td)
-        (tmp / "tasks.py").write_text(student_code, encoding="utf-8")
+        # Write student file and copy tests strictly inside the temp dir
+        student_file = tmp / "tasks.py"
+        student_file.write_text(student_code, encoding="utf-8")
         shutil.copy2(tests_src, tmp / "test_tasks.py")
-        
+
         cmd = [sys.executable, "-m", "pytest", "-q", "--maxfail=1", "--disable-warnings"]
-        proc = subprocess.run(cmd, cwd=str(tmp), capture_output=True, text=True, timeout=60)
-        
+
+        # Minimal environment for the subprocess to reduce inherited secrets
+        safe_env = {
+            "PATH": "/usr/bin:/bin" if sys.platform != "win32" else os.environ.get("PATH", ""),
+            "PYTHONUNBUFFERED": "1",
+        }
+
+        # On Unix, apply resource limits to the child (soft limits)
+        preexec_fn = None
+        if sys.platform != "win32":
+            try:
+                import resource
+
+                def _limits():
+                    # 2 seconds of CPU time
+                    resource.setrlimit(resource.RLIMIT_CPU, (2, 2))
+                    # 256 MB address space (soft limit)
+                    resource.setrlimit(resource.RLIMIT_AS, (256 * 1024 * 1024, resource.RLIM_INFINITY))
+
+                preexec_fn = _limits
+            except Exception:
+                preexec_fn = None
+
+        try:
+            proc = subprocess.run(
+                cmd,
+                cwd=str(tmp),
+                capture_output=True,
+                text=True,
+                timeout=60,
+                env=safe_env,
+                stdin=subprocess.DEVNULL,
+                preexec_fn=preexec_fn,
+            )
+        except subprocess.TimeoutExpired as te:
+            return {
+                "success": False,
+                "returncode": -1,
+                "stdout": "",
+                "stderr": f"TimeoutExpired: {str(te)}",
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "returncode": -1,
+                "stdout": "",
+                "stderr": f"Execution error: {str(e)}",
+            }
+
         success = proc.returncode == 0
         return {
             "success": success,

@@ -92,3 +92,4 @@ yarn-error.log*
 .pytest_cache/
 **/_pytest__/**/*
 **/__pycache__/**/*
+server/__pycache__/*

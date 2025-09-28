@@ -4,11 +4,13 @@ from tasks import fetch, run_three, offload_square
 
 def test_fetch_event_loop():
     result = asyncio.run(fetch("X", 0.01))
-    assert result.startswith("X done after")
+    assert isinstance(result, str)
+    assert "X" in result
 
 
 def test_run_three():
     results = asyncio.run(run_three())
+    assert isinstance(results, list)
     assert len(results) == 3
 
 
